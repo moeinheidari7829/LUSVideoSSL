@@ -19,7 +19,7 @@ from torch.utils.data import DataLoader, TensorDataset
 
 BUDGETS = (5, 10, 50, 100)
 PROBES = ("linear", "knn", "attentive")
-MODELS = ("videomae_small", "vjepa_small")
+MODELS = ("videomae_small", "vjepa_small", "moco_small")
 
 
 @dataclass

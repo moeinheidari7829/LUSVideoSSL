@@ -38,6 +38,9 @@ RESULTS="${RESULTS:-$REPO_ROOT/outputs/evaluation}"
 #   vjepa_small/
 #       pocus_diagnostic.npz
 #       mendeley_uganda_diagnostic.npz
+#   moco_small/
+#       pocus_diagnostic.npz
+#       mendeley_uganda_diagnostic.npz
 if [[ ! -d "$FEATURES/videomae_small" ]]; then
     echo "ERROR: VideoMAE features not found: $FEATURES/videomae_small"
     exit 1
@@ -45,6 +48,11 @@ fi
 
 if [[ ! -d "$FEATURES/vjepa_small" ]]; then
     echo "ERROR: V-JEPA features not found: $FEATURES/vjepa_small"
+    exit 1
+fi
+
+if [[ ! -d "$FEATURES/moco_small" ]]; then
+    echo "ERROR: MoCo v3 features not found: $FEATURES/moco_small"
     exit 1
 fi
 

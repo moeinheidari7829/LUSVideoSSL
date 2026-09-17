@@ -90,6 +90,7 @@ Patient-level partitioning is essential: temporally adjacent LUS frames are near
 ```
 LUSVideoSSL/
 ├── pretraining/
+│   ├── MoCo-v3/            # contrastive (InfoNCE, ViT-S/16 + tubelet embed)
 │   ├── VideoMAE/          # masked reconstruction (tube masking, ρ = 0.9)
 │   └── V-JEPA/            # latent prediction (EMA target encoder + predictor)
 └── evaluation/
@@ -141,7 +142,18 @@ cd pretraining/V-JEPA
 python -m app.main --fname configs/custom/vits16_covid_100e_seed0.yaml --devices cuda:0
 ```
 
-SLURM launchers for both are provided ([`train_videomae_100e.slurm`](pretraining/VideoMAE/train_videomae_100e.slurm), [`vjepa_small_100e_seed0.slurm`](pretraining/V-JEPA/vjepa_small_100e_seed0.slurm)).
+**MoCo v3-S** — contrastive, video-adapted (ViT-S/16 + tubelet patch embed):
+
+```bash
+cd pretraining/MoCo-v3
+python main_moco_video.py \
+  --manifest $MANIFEST \
+  --clip-len 16 --tubelet-size 2 \
+  --batch-size 4 --epochs 100 --lr 1.5e-4 \
+  --checkpoint-dir ./outputs/checkpoints
+```
+
+SLURM launchers are provided for all three ([`train_videomae_100e.slurm`](pretraining/VideoMAE/train_videomae_100e.slurm), [`vjepa_small_100e_seed0.slurm`](pretraining/V-JEPA/vjepa_small_100e_seed0.slurm), [`train_mocov3_100e.slurm`](pretraining/MoCo-v3/train_mocov3_100e.slurm)).
 
 </details>
 
@@ -168,12 +180,16 @@ python build_mendeley_manifest.py --data-root $MENDELEY_ROOT --output mendeley.c
 
 ```bash
 export VJEPA_REPO=/path/to/LUSVideoSSL/pretraining/V-JEPA
+export MOCOV3_REPO=/path/to/LUSVideoSSL/pretraining/MoCo-v3
 
 python extract_vjepa_features.py \
   --manifest pocus.csv --checkpoint $VJEPA_CKPT --output features/vjepa_pocus.npz
 
 python extract_videomae_features.py \
   --manifest pocus.csv --checkpoint $VIDEOMAE_CKPT --output features/videomae_pocus.npz
+
+python extract_moco_features.py \
+  --manifest pocus.csv --checkpoint $MOCOV3_CKPT --output features/moco_pocus.npz
 ```
 
 Clips are deterministic 16-frame centre crops (stride 2, short side 256 → 224 centre crop, ImageNet normalisation). Each `.npz` holds pooled `[N, 384]` and temporal `[N, 8, 384]` features plus manifest metadata. Add `--limit 1` for a smoke test.
