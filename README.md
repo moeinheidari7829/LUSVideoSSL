@@ -13,7 +13,7 @@ Ilker Hacihaliloglu<sup>1</sup>
 
 <sup>1</sup> University of British Columbia &nbsp;&nbsp; <sup>2</sup> Rutgers Cancer Institute of New Jersey
 
-[![Paper](https://img.shields.io/badge/Paper-SPIE-b31b1b.svg)](#citation)
+[![Paper](https://img.shields.io/badge/Paper-SPIE-b31b1b.svg)](https://arxiv.org/abs/2609.16551)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.9+-3776ab.svg)](#getting-started)
 [![PyTorch](https://img.shields.io/badge/PyTorch-ee4c2c.svg)](#getting-started)
