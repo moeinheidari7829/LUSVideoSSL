@@ -1,6 +1,6 @@
 # Sockeye frozen LUS feature extraction
 
-Copy `common.py`, both extractor files, and both SLURM files into:
+Copy `common.py`, all extractor files, and all SLURM files into:
 
 ```text
 evaluation/lus_eval/
@@ -11,6 +11,7 @@ Before full jobs, run one-sample smoke tests from a GPU allocation:
 ```bash
 python extract_videomae_features.py ... --limit 1
 python extract_vjepa_features.py ... --limit 1
+python extract_moco_features.py ... --limit 1
 ```
 
 Inputs are deterministic center clips of 16 frames with stride 2. Short videos

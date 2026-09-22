@@ -1,0 +1,9 @@
+# MoCo v3 (video-adapted) pretraining requirements.
+# Tested with Python 3.8-3.10.
+torch>=1.9
+torchvision>=0.10
+timm==0.4.9        # vits.py uses timm's VisionTransformer + PatchEmbed internals,
+                    # which moved around in later timm releases -- pin this version.
+opencv-python       # video_dataset.py decodes clips with cv2.VideoCapture
+Pillow
+numpy
